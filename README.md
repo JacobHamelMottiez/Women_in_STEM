@@ -1,2 +1,2 @@
 # Women_in_STEM
-![[Women in STEM_logo.png]]
+![](Women_in_STEM_logo.png)
