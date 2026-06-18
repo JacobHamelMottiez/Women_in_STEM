@@ -5,4 +5,4 @@ Historically, the university as an institution has largely been reserved for men
 **OBJECTIVES.** 
 The overall objective of this project is to provide a portrait of the evolution of women's research topics in graduate STEM studies in Quebec over the past four decades (1985–2025). To achieve this objective, three sub-objectives will be pursued. First, we will map the entire scholarly output of our corpus according to research themes (1). Second, we will identify the works authored by women within our corpus in order to conduct analyses specifically on this subset (2). Third, we will document the historical and institutional initiatives implemented to promote the inclusion of women in Quebec universities in order to better understand how these initiatives may have influenced the dynamics identified in the previous analyses (3).
 
-![](Women_in_STEM_logo.png)
+![](Ressources/Women_in_STEM_logo.png)
