@@ -1,0 +1,4 @@
+HOME   = C:/Users/jacob/OneDrive - Université Laval
+R_USER = C:/Users/jacob/OneDrive - Université Laval
+
+options(device = function(...) grDevices::svg(...))

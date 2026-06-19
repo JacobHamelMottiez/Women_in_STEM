@@ -1,0 +1,74 @@
+---
+title: 'Technical Appendix "Women in STEM"'
+date: today
+author:
+  - name: Jacob Hamel-Mottiez
+    id: jc
+    orcid: https://orcid.org/0009-0007-3666-908X
+    email: jacob.hamel-Mottiez@mail.mcgill.ca
+    affiliation: 
+      - name: McGill University
+
+code-links: 
+  - icon: github
+    text: Github
+    href: https://github.com/JacobHamelMottiez
+
+abstract: This file is the technical appendix for my article "Women in STEM". For any questions or issues, please email the author.
+
+format: 
+  html: default
+
+code-fold: true 
+code-summary: "Show Code"
+number-sections: true
+toc: true
+toc-depth: 2
+toc-location: left
+
+theme:
+  light: flatly
+  dark: darkly
+
+keywords:
+  - Women 
+  - STEM
+  - Quebec
+
+abstract-title: What is this file about?
+
+---
+
+# Packages
+```{r}
+#| warning: false
+#| code-fold: false
+
+library(gt)
+library(here)
+library(forcats)
+library(plotly)
+library(tidyverse)
+library(readxl)
+library(pubmedR)
+library(dplyr)
+library(gghighlight)
+```
+
+
+```{r}
+wis.data <- read_csv("C:/Users/jacob/OneDrive - Université Laval/Desktop/PROJECTS/Women_in_STEM/Data/theses-canada_2026-06-19.csv", skip = 2)
+```
+
+
+
+::: {.callout-warning}
+## Incomplete dataset
+It is weird, I only get 5000 results, when there should be 797 572. 
+:::
+
+
+
+```{r}
+wis.data |> select(Titre)
+```
