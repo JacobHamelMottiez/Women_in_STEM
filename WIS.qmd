@@ -26,9 +26,7 @@ toc: true
 toc-depth: 2
 toc-location: left
 
-theme:
-  light: flatly
-  dark: darkly
+
 
 keywords:
   - Women 
@@ -36,8 +34,15 @@ keywords:
   - Quebec
 
 abstract-title: What is this file about?
-
 ---
+
+```{r}
+source("setup.R")
+
+#| echo: false
+# TODO: remove when first edition complete
+status("wip")
+```
 
 # Packages
 ```{r}
@@ -62,12 +67,10 @@ wis.data <- read_csv("C:/Users/jacob/OneDrive - Université Laval/Desktop/PROJEC
 ```
 
 
-
 ::: {.callout-warning}
 ## Incomplete dataset
 It is weird, I only get 5000 results, when there should be 797 572. 
 :::
-
 
 
 ```{r}
@@ -77,23 +80,59 @@ colnames(wis.data)
 pub_year_uni <- wis.data |>
   group_by(universite, date_de_publication) |>
   summarise(n_publications = n(), .groups = "drop") 
-
-
-ggplot(pub_year_uni, aes(y = n_publications, x = date_de_publication, color = universite, group = universite)) +
-  geom_point()+
-  geom_line() + 
-  theme(legend.position = "none")
 ```
 
 ```{r}
-quebec_uni <- c("McGill University","Université de Montréal", "Concordia University", "Université du Québec à Montréal", "Université Laval", "Université du Québec à Trois-Rivières", "Université de Sherbrooke")
+quebec_uni <- quebec_universities <- c(
+  "Bishop's University",
+  "Concordia University",
+  "École de technologie supérieure",
+  "École nationale d'administration publique",
+  "HEC Montréal",
+  "Institut national de la recherche scientifique",
+  "McGill University",
+  "Polytechnique Montréal",
+  "Royal Military College Saint-Jean",
+  "TÉLUQ University",
+  "Université de Montréal",
+  "Université de Sherbrooke",
+  "Université Laval",
+  "Université du Québec à Chicoutimi",
+  "Université du Québec à Montréal",
+  "Université du Québec à Rimouski",
+  "Université du Québec à Trois-Rivières",
+  "Université du Québec en Abitibi-Témiscamingue",
+  "Université du Québec en Outaouais"
+)
 ```
 
+We have also access to other dataset, especially from Hughes et al. [Include reference]. 
 
 ```{r}
+hughes.dion.data <- read.csv(
+  r"(C:\Users\jacob\OneDrive - Université Laval\Desktop\PROJECTS\Women_in_STEM\Data\thesesMemoiresQC2000-2022-v20230508-1.csv)"
+)
+```
 
-ggplot(pub_year_uni |> filter(universite %in% quebec_uni), aes(y = n_publications, x = date_de_publication, color = universite, group = universite))+
-  geom_smooth(se = FALSE) + 
-  theme(legend.position = "none")
+The following plot looks at the publication by universities, by year.
+```{r}
+hughes.dion.data <- hughes.dion.data  |> mutate(lang = ifelse(univ %in% c('McGill', 'Concorradia'), "Anglophone", "Francophone"))
 
+hughes.dion.data <- hughes.dion.data  |> mutate(UQ = ifelse(univ %in% c('UQAM', 'UQO', 'UQAR', 'UQAT', 'UQTR', 'UQAC'), "UQ", "-UQ"))
+
+univ.year <- hughes.dion.data |> select(univ, année, lang, UQ)
+univ.year <- univ.year |> group_by(univ, année) |>  mutate(n = sum(année)) |> unique()
+
+ggplot(univ.year, aes(x = année, y = n, group = univ, color = univ)) +
+  geom_smooth() + 
+  facet_wrap(facets = 'UQ')
+```
+
+Here, we look at the sum of all MA's and Phd's thesis by university. 
+```{r}
+univ.total = hughes.dion.data |> select(univ, lang, UQ) |> group_by(univ) |> mutate(n = n()) |> unique()
+
+
+ggplot(univ.total, aes(x = reorder(univ, n), y = n, color = univ, fill = univ)) +
+  geom_col(show.legend = FALSE) 
 ```
