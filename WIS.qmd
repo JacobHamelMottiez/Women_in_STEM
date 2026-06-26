@@ -26,6 +26,9 @@ toc: true
 toc-depth: 2
 toc-location: left
 
+theme:
+  light: default
+  dark: darkly
 
 
 keywords:
