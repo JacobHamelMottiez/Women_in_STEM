@@ -53,6 +53,7 @@ library(readxl)
 library(pubmedR)
 library(dplyr)
 library(gghighlight)
+library(janitor)
 ```
 
 
@@ -70,5 +71,29 @@ It is weird, I only get 5000 results, when there should be 797 572.
 
 
 ```{r}
-wis.data |> select(Titre)
+wis.data <- wis.data |> janitor::clean_names()
+colnames(wis.data)
+
+pub_year_uni <- wis.data |>
+  group_by(universite, date_de_publication) |>
+  summarise(n_publications = n(), .groups = "drop") 
+
+
+ggplot(pub_year_uni, aes(y = n_publications, x = date_de_publication, color = universite, group = universite)) +
+  geom_point()+
+  geom_line() + 
+  theme(legend.position = "none")
+```
+
+```{r}
+quebec_uni <- c("McGill University","Université de Montréal", "Concordia University", "Université du Québec à Montréal", "Université Laval", "Université du Québec à Trois-Rivières", "Université de Sherbrooke")
+```
+
+
+```{r}
+
+ggplot(pub_year_uni |> filter(universite %in% quebec_uni), aes(y = n_publications, x = date_de_publication, color = universite, group = universite))+
+  geom_smooth(se = FALSE) + 
+  theme(legend.position = "none")
+
 ```
