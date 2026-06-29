@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jacob Hamel-Mottiez">
-<meta name="dcterms.date" content="2026-06-26">
+<meta name="dcterms.date" content="2026-06-29">
 <meta name="keywords" content="Women, STEM, Quebec">
 
 <title>Technical Appendix “Women in STEM”</title>
@@ -77,6 +77,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="WIS_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="WIS_files/libs/bootstrap/bootstrap-dark-7c823468029c3b379f9b90e418026680.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="WIS_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="WIS_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="WIS_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="WIS_files/libs/plotly-binding-4.12.0/plotly.js"></script>
+
+<script src="WIS_files/libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="WIS_files/libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="WIS_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="WIS_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+<link href="WIS_files/libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="WIS_files/libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
 
 
 </head>
@@ -286,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 26, 2026</p>
+      <p class="date">June 29, 2026</p>
     </div>
   </div>
   
@@ -436,7 +454,7 @@ dbl (2): #"Position", Numéro d'article
 <div class="cell">
 <details class="code-fold">
 <summary>Show Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hughes.dion.data <span class="ot">&lt;-</span> hughes.dion.data  <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">lang =</span> <span class="fu">ifelse</span>(univ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'McGill'</span>, <span class="st">'Concorradia'</span>), <span class="st">"Anglophone"</span>, <span class="st">"Francophone"</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hughes.dion.data <span class="ot">&lt;-</span> hughes.dion.data  <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">lang =</span> <span class="fu">ifelse</span>(univ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'McGill'</span>, <span class="st">'Concordia'</span>), <span class="st">"Anglophone"</span>, <span class="st">"Francophone"</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>hughes.dion.data <span class="ot">&lt;-</span> hughes.dion.data  <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">UQ =</span> <span class="fu">ifelse</span>(univ <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'UQAM'</span>, <span class="st">'UQO'</span>, <span class="st">'UQAR'</span>, <span class="st">'UQAT'</span>, <span class="st">'UQTR'</span>, <span class="st">'UQAC'</span>), <span class="st">"UQ"</span>, <span class="st">"-UQ"</span>))</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -465,8 +483,10 @@ dbl (2): #"Position", Numéro d'article
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>univ.total <span class="ot">=</span> hughes.dion.data <span class="sc">|&gt;</span> <span class="fu">select</span>(univ, lang, UQ) <span class="sc">|&gt;</span> <span class="fu">group_by</span>(univ) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> <span class="fu">unique</span>()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(univ.total, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(univ, n), <span class="at">y =</span> n, <span class="at">color =</span> univ, <span class="at">fill =</span> univ)) <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(univ.total, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(univ, n), <span class="at">y =</span> n, <span class="at">color =</span> lang, <span class="at">fill =</span> lang)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plot1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -474,6 +494,16 @@ dbl (2): #"Position", Numéro d'article
 <p><img src="WIS_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(plot1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-940f8be97ca461bd5c9e" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-940f8be97ca461bd5c9e">{"x":{"data":[{"orientation":"v","width":[0.89999999999999858,0.89999999999999858],"base":[0,0],"x":[13,17],"y":[10821,21889],"text":["reorder(univ, n): Concordia<br />n: 10821<br />lang: Anglophone<br />lang: Anglophone","reorder(univ, n): McGill<br />n: 21889<br />lang: Anglophone<br />lang: Anglophone"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","line":{"width":1.8897637795275593,"color":"rgba(248,118,109,1)"}},"name":"Anglophone","legendgroup":"Anglophone","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.89999999999999947,0.89999999999999858,0.90000000000000036,0.89999999999999858,0.89999999999999858,0.89999999999999858,0.89999999999999858,0.90000000000000036,0.89999999999999858,0.90000000000000036,0.90000000000000036,0.90000000000000036,0.89999999999999858,0.90000000000000013,0.89999999999999991],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[8,9,6,15,11,16,12,7,14,5,4,3,10,2,1],"y":[2744,3385,1910,17975,5659,18230,8433,2065,11234,1316,554,420,3395,162,52],"text":["reorder(univ, n): ÉTS<br />n:  2744<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): HEC<br />n:  3385<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): INRS<br />n:  1910<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): Laval<br />n: 17975<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): Poly<br />n:  5659<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UdeM<br />n: 18230<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UdeS<br />n:  8433<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UQAC<br />n:  2065<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UQAM<br />n: 11234<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UQAR<br />n:  1316<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UQAT<br />n:   554<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UQO<br />n:   420<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): UQTR<br />n:  3395<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): ÉNAP<br />n:   162<br />lang: Francophone<br />lang: Francophone","reorder(univ, n): Téluq<br />n:    52<br />lang: Francophone<br />lang: Francophone"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","line":{"width":1.8897637795275593,"color":"rgba(0,191,196,1)"}},"name":"Francophone","legendgroup":"Francophone","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283104,"r":7.3059360730593621,"b":56.800610368868405,"l":54.794520547945211},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,17.600000000000001],"tickmode":"array","ticktext":["Téluq","ÉNAP","UQO","UQAT","UQAR","INRS","UQAC","ÉTS","HEC","UQTR","Poly","UdeS","Concordia","UQAM","Laval","UdeM","McGill"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"categoryorder":"array","categoryarray":["Téluq","ÉNAP","UQO","UQAT","UQAR","INRS","UQAC","ÉTS","HEC","UQTR","Poly","UdeS","Concordia","UQAM","Laval","UdeM","McGill"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-45,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"reorder(univ, n)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1094.45,22983.450000000001],"tickmode":"array","ticktext":["0","5000","10000","15000","20000"],"tickvals":[0,5000,10000,14999.999999999998,20000],"categoryorder":"array","categoryarray":["0","5000","10000","15000","20000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"n","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"747c46c6312a":{"x":{},"y":{},"colour":{},"fill":{},"type":"bar"}},"cur_data":"747c46c6312a","visdat":{"747c46c6312a":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>

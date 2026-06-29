@@ -119,7 +119,7 @@ hughes.dion.data <- read.csv(
 
 The following plot looks at the publication by universities, by year.
 ```{r}
-hughes.dion.data <- hughes.dion.data  |> mutate(lang = ifelse(univ %in% c('McGill', 'Concorradia'), "Anglophone", "Francophone"))
+hughes.dion.data <- hughes.dion.data  |> mutate(lang = ifelse(univ %in% c('McGill', 'Concordia'), "Anglophone", "Francophone"))
 
 hughes.dion.data <- hughes.dion.data  |> mutate(UQ = ifelse(univ %in% c('UQAM', 'UQO', 'UQAR', 'UQAT', 'UQTR', 'UQAC'), "UQ", "-UQ"))
 
@@ -136,6 +136,13 @@ Here, we look at the sum of all MA's and Phd's thesis by university.
 univ.total = hughes.dion.data |> select(univ, lang, UQ) |> group_by(univ) |> mutate(n = n()) |> unique()
 
 
-ggplot(univ.total, aes(x = reorder(univ, n), y = n, color = univ, fill = univ)) +
-  geom_col(show.legend = FALSE) 
+plot1 <- ggplot(univ.total, aes(x = reorder(univ, n), y = n, color = lang, fill = lang)) +
+  geom_col(show.legend = FALSE) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plot1
+```
+
+
+```{r}
+ggplotly(plot1)
 ```
