@@ -146,3 +146,14 @@ plot1
 ```{r}
 ggplotly(plot1)
 ```
+
+
+# Institutional Deposit from UQTR
+
+```{r}
+uqtr.data <- read.csv(
+  r"(C:\Users\jacob\OneDrive - Université Laval\Desktop\PROJECTS\Women_in_STEM\Data\20260630_uqtr.csv)"
+)
+uqtr.data 
+
+```
